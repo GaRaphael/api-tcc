@@ -1,7 +1,10 @@
 import { PrismaHelper } from '../helpers';
 import {
     AddMeetingRepositoryParams,
-    AddMeetingRepositoryResponse
+    AddMeetingRepositoryResponse,
+    GetAllMeetingRepositoryResponse,
+    GetByIdMeetingRepositoryParams,
+    GetByIdMeetingRepositoryResponse
 } from '../../../data/domain';
 
 
@@ -31,76 +34,54 @@ export class MeetingRepository {
         return response;
     }
 
-    // public async getAll(): Promise<AddNoticeRepositoryResponse[]> {
-    //     const { notice: noticeModel } = prisma;
+    public async getAll(): Promise<GetAllMeetingRepositoryResponse[]> {
+        const { meeting: meetingModel } = prisma;
 
-    //     const response = await noticeModel.findMany({
-    //         where: {
-    //             active: true
-    //         },
-    //         select: {
-    //             id: true,
-    //             title: true,
-    //             description: true,
-    //             image: true || null,
-    //             active: true,
-    //             created_at: true,
-    //             updated_at: true
-    //         },
-    //         orderBy: {
-    //             created_at: 'desc'
-    //         }
-    //     });
+        const response = await meetingModel.findMany({
+            where: {
+                active: true
+            },
+            select: {
+                id: true,
+                title: true,
+                description: true,
+                subject: true,
+                date: true,
+                active: true,
+                created_at: true,
+                updated_at: true
+            },
+            orderBy: {
+                created_at: 'desc'
+            }
+        });
 
-    //     return response;
-    // }
+        return response;
+    }
 
-    // public async getId(): Promise<AddNoticeRepositoryResponse[]> {
-    //     const { notice: noticeModel } = prisma;
+    public async getId(params: GetByIdMeetingRepositoryParams): Promise<GetByIdMeetingRepositoryResponse> {
+        const { meeting: meetingModel } = prisma;
 
-    //     const response = await noticeModel.findMany({
-    //         where: {
-    //             active: true
-    //         },
-    //         select: {
-    //             id: true,
-    //             title: true,
-    //             description: true,
-    //             image: true || null,
-    //             active: true,
-    //             created_at: true,
-    //             updated_at: true
-    //         },
-    //         orderBy: {
-    //             created_at: 'desc'
-    //         }
-    //     });
+        const response = await meetingModel.findFirst({
+            where: {
+                id: params.id
+            },
+            select: {
+                id: true,
+                title: true,
+                description: true,
+                subject: true,
+                date: true,
+                active: true,
+                created_at: true,
+                updated_at: true
+            }
+        });
 
-    //     return response;
-    // }
+        if (!response) {
+            throw new Error('Meeting not found');
+        }
 
-    
-    // public async update(): Promise<AddNoticeRepositoryResponse[]> {
-    //     const { notice: noticeModel } = prisma;
-
-    //     const response = await noticeModel.findMany({
-    //         where: {
-    //             active: true
-    //         },
-    //         select: {
-    //             id: true,
-    //             title: true,
-    //             description: true,
-    //             image: true || null,
-    //             active: true,
-    //             created_at: true,
-    //             updated_at: true
-    //         },
-    //         orderBy: {
-    //             created_at: 'desc'
-    //         }
-    //     });
-
-    //     return response;
-    // }
+        return response;
+    }
 }

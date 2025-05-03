@@ -54,3 +54,51 @@ export interface GetAllMeetingUseCaseResponse {
     error?: string
 }
 
+export interface GetAllMeetingRepositoryResponse {
+    id: number
+    date: Date,
+    description: string,
+    subject: string,
+    title: string,
+    active: boolean
+    created_at: Date
+    updated_at: Date
+}[]
+
+//-------------------- get by id ----------------
+
+export interface GetByIdMeetingUseCaseResponse {
+    data?: {
+        id: number
+        date: Date,
+        description: string,
+        subject: string,
+        title: string,
+        active: boolean
+        created_at: Date
+        updated_at: Date
+    }
+    error?: string
+}
+
+export interface GetByIdMeetingRepositoryResponse {
+    id: number
+    date: Date,
+    description: string,
+    subject: string,
+    title: string,
+    active: boolean
+    created_at: Date
+    updated_at: Date
+}
+
+
+export interface GetByIdMeetingUseCaseParams {
+    id: number
+}
+
+export interface GetByIdMeetingRepositoryParams {
+    id: number
+}
+
+

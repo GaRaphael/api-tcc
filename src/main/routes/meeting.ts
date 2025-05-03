@@ -1,11 +1,15 @@
 import { Router } from 'express';
 import {
     AddMeetingController,
-} from '../../presentation/controller';
+    GetAllMeetingController,
+    GetByIdMeetingController
+} from '../../presentation/controller/meeting';
 
 import {
     AddMeetingUseCase,
-} from '../../data/useCase';
+    GetAllMeetingUseCase,
+    GetByIdMeetingUseCase
+} from '../../data/useCase/meeting';
 
 import { adaptRoute } from '../adapter/expressRouteAdapter';
 import { Controller } from '../../presentation/controller';
@@ -24,8 +28,33 @@ const makeAddMeetingController = (): Controller => {
 };
 
 
+const makeGetAllMeetingController = (): Controller => {
+
+    const meetingRepository = new MeetingRepository();
+
+    const getAllMeetingUseCase = new GetAllMeetingUseCase(meetingRepository);
+    const getAllMeetingController = new GetAllMeetingController(getAllMeetingUseCase);
+
+    return getAllMeetingController;
+};
+
+const makeGetByIdMeetingController = (): Controller => {
+
+    const meetingRepository = new MeetingRepository();
+
+    const getByIdMeetingUseCase = new GetByIdMeetingUseCase(meetingRepository);
+    const getByIdMeetingController = new GetByIdMeetingController(getByIdMeetingUseCase);
+
+    return getByIdMeetingController;
+};
+
+
+
+
 router
     .post('/meeting', adaptRoute(makeAddMeetingController()))
+    .get('/meeting/all', adaptRoute(makeGetAllMeetingController()))
+    .get('/meeting/:id', adaptRoute(makeGetByIdMeetingController()))
 
 
 export default router;

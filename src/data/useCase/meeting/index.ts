@@ -1,3 +1,3 @@
 export * from './addMeetingUseCase'
-// export * from './findAllMeetingUseCase'
-// export * from './findByIdMeetingUseCase'
+export * from './findAllMeetingUseCase'
+export * from './findByIdMeetingUseCase'
