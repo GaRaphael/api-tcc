@@ -4,6 +4,7 @@ const router = Router();
 import userRouter from './user';
 import authRouter from './auth';
 import NoticeRouter from './notice';
+import MeetingRouter from './meeting';
 
 router.get('/healthCheck', (__, res) => {
   res.status(200).send({
@@ -15,5 +16,6 @@ router.get('/healthCheck', (__, res) => {
 router.use(userRouter);
 router.use(authRouter);
 router.use(NoticeRouter);
+router.use(MeetingRouter);
 
 export default router;
