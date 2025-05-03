@@ -1,0 +1,70 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model user {
+  id         Int        @id @default(autoincrement())
+  email      String
+  cpf        String     @unique
+  name       String
+  password   String
+  active     Boolean    @default(true)
+  created_at DateTime   @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  updated_at DateTime   @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  comment    comment[]
+  reaction   reaction[]
+}
+
+model notice {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  image       String?
+  active      Boolean  @default(true)
+  created_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  updated_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+}
+
+model meeting {
+  id          Int        @id @default(autoincrement())
+  title       String
+  subject     String
+  description String
+  date        DateTime
+  comment_id  Int?
+  reaction_id Int?
+  active      Boolean    @default(true)
+  created_at  DateTime   @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  updated_at  DateTime   @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  comment     comment[]
+  reaction    reaction[]
+}
+
+model comment {
+  id          Int      @id @default(autoincrement())
+  meeting_id  Int
+  user_id     Int
+  description String
+  active      Boolean  @default(true)
+  created_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  updated_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  user        user     @relation(fields: [user_id], references: [id])
+  meeting     meeting  @relation(fields: [meeting_id], references: [id])
+}
+
+model reaction {
+  id         Int      @id @default(autoincrement())
+  meeting_id Int
+  user_id    Int
+  type       String
+  active     Boolean  @default(true)
+  created_at DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  updated_at DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  user       user     @relation(fields: [user_id], references: [id])
+  meeting    meeting  @relation(fields: [meeting_id], references: [id])
+}
