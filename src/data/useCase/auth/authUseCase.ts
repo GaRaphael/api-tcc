@@ -1,29 +1,40 @@
-
 import { AuthRepository } from '../../../infra/db/auth/authRepository';
+import jwt from 'jsonwebtoken';
 
 export class AuthUseCase {
 
-  constructor(private authRepository: AuthRepository) { }
+  constructor(
+    private authRepository: AuthRepository,
+  ) { }
 
-  async perform(params: AuthUseCaseParams): Promise<any> {
+  async perform(params: {cpf: string, password: string}): Promise<{ token?: string, error?: string }> {
+
 
     try {
-      const { email, password } = params;
+      const { cpf, password} = params;
 
-      const user = await this.authRepository.auth({ email, password });
-
-      if (user && !user?.active) {
-        return { error: 'Disabled user' };
-      }
+      // AUTH USER 
+      const user = await this.authRepository.auth({
+        cpf,
+        password,
+      });
 
       if (!user) {
-        return { error: 'Invalid email or password' };
+        return { error: 'Cpf ou senha inválida' };
       }
 
-      return { data: user };
+      const token = jwt.sign({
+        ...user.user,
+      }, process.env.TOKEN_SECRET || '', {
+        expiresIn: '1d',
+      });
+
+      return { token };
 
     } catch (error) {
+      console.log('error', error)
       return { error: `${error}` };
     }
   }
 }
+

@@ -1,1 +1,1 @@
-export * from './authRepository'
+export * from './authRepository';

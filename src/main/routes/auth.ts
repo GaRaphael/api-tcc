@@ -1,26 +1,25 @@
-import { Router } from 'express';
-import { AuthController } from '../../presentation/controller';
-import { AuthUseCase } from '../../data/useCase';
-import { adaptRoute } from '../adapter/expressRouteAdapter';
-import { Controller } from '../../presentation/controller';
-import { AuthRepository } from '../../infra/db/auth';
+import { Router } from "express";
+import { AuthController, ResetPasswordController } from "../../presentation/controller";
+import { AuthUseCase} from "../../data/useCase";
+import auth from "../middlewares/auth";
+import { adaptRoute } from "../adapter/expressRouteAdapter";
+import { Controller } from "../../presentation/controller";
+import { AuthRepository } from "../../infra";
 
 const router = Router();
 
+// dependency injection factory Controller
 const makeAuthController = (): Controller => {
+  const authRepository = new AuthRepository();
 
-    const authRepository = new AuthRepository();
+  const authUseCase = new AuthUseCase(authRepository);
+  const authController = new AuthController(authUseCase);
 
-    const authUseCase = new AuthUseCase(authRepository);
-    const authController = new AuthController(authUseCase);
-
-    return authController;
+  return authController;
 };
 
 
-
 router
-    .get('/auth', adaptRoute(makeAuthController()))
-
+    .post('/auth', adaptRoute(makeAuthController()))
 
 export default router;

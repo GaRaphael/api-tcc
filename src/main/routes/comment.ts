@@ -12,6 +12,7 @@ import {
 import { adaptRoute } from '../adapter/expressRouteAdapter';
 import { Controller } from '../../presentation/controller';
 import { CommentRepository } from '../../infra/db';
+import  auth  from '../../main/middlewares/auth';
 
 const router = Router();
 
@@ -40,7 +41,7 @@ const makeGetAllCommentController = (): Controller => {
 
 
 router
-    .post('/comment', adaptRoute(makeAddCommentController()))
+    .post('/comment', auth, adaptRoute(makeAddCommentController()))
     .get('/comment/all/:meeting_id', adaptRoute(makeGetAllCommentController()))
 
 export default router;
