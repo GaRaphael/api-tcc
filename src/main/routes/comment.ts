@@ -42,6 +42,6 @@ const makeGetAllCommentController = (): Controller => {
 
 router
     .post('/comment', auth, adaptRoute(makeAddCommentController()))
-    .get('/comment/all/:meeting_id', adaptRoute(makeGetAllCommentController()))
+    .get('/comment/:meeting_id', adaptRoute(makeGetAllCommentController()))
 
 export default router;

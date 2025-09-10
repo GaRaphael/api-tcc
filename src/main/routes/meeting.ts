@@ -53,7 +53,7 @@ const makeGetByIdMeetingController = (): Controller => {
 
 router
     .post('/meeting', adaptRoute(makeAddMeetingController()))
-    .get('/meeting/all', adaptRoute(makeGetAllMeetingController()))
+    .get('/meetings', adaptRoute(makeGetAllMeetingController()))
     .get('/meeting/:id', adaptRoute(makeGetByIdMeetingController()))
 
 
