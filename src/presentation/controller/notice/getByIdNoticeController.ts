@@ -1,17 +1,18 @@
-import { Request } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { ResetPasswordUseCase } from '../../../data/useCase/user'
+import { GetByIdNoticeUseCase } from '../../../data/useCase/notice/getByIdNoticeUseCase'
 import { Controller, HttpResponse } from '../protocols/controller.protocols';
+import { Request } from 'express';
 
-
-export class ResetPasswordController implements Controller {
-    constructor(private resetPasswordUseCase: ResetPasswordUseCase) { }
+export class GetByIdNoticeController implements Controller {
+    constructor(private getByIdNoticeUseCase: GetByIdNoticeUseCase) { }
 
     public async handle(request: Request): Promise<HttpResponse> {
 
         try {
 
-            const response = await this.resetPasswordUseCase.perform({ email: request.body.email, new_password: request.body.new_password });
+            const response = await this.getByIdNoticeUseCase.perform({
+                id: Number(request.params.id)
+            });
 
             if (response.error) {
                 return { statusCode: StatusCodes.BAD_REQUEST, body: response.error };

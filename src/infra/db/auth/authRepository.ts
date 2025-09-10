@@ -1,28 +1,29 @@
 import { checkPassword } from "../../../main/utils/auth";
-import { formarterUniqueUser } from "./helper";
 import { PrismaHelper } from "../helpers";
 
 const { prisma } = PrismaHelper;
 export class AuthRepository {
-  public async auth(params: { cpf: string, password: string }): Promise<any> {
-    const { cpf, password } = params;
+  public async auth(params: { email: string, password: string }): Promise<any> {
+    const { email, password } = params;
     const { user: UserRepository } = prisma;
 
     const user = await UserRepository.findFirst({
       where: {
-        cpf
+        email
       }
     })
 
     if (user) {
+
       const validPassword = await checkPassword(password, user.password);
-
       if (validPassword) {
-
-        const formatUser = formarterUniqueUser(user);
-
+        
         return {
-          user: formatUser
+          user: {
+            id: user.id,
+            name: user.name,
+            email: user.email
+          }
         };
       }
     }

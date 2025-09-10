@@ -12,7 +12,7 @@ export class AddUserUseCase {
   async perform(params: AddUserUseCaseParams): Promise<AddUserUseCaseResponse> {
 
     try {
-      const alreadyUser = await this.userRepository.verifyExists({ cpf: params.cpf });
+      const alreadyUser = await this.userRepository.verifyExists({ email: params.email });
 
 
       const cryptPassword = await generatePassword(params.password);

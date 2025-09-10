@@ -7,29 +7,34 @@ export class AuthUseCase {
     private authRepository: AuthRepository,
   ) { }
 
-  async perform(params: {cpf: string, password: string}): Promise<{ token?: string, error?: string }> {
+  async perform(params: { email: string, password: string }): Promise<{ token?: string, user?: any, error?: string }> {
 
 
     try {
-      const { cpf, password} = params;
+      const { email, password } = params;
 
-      // AUTH USER 
-      const user = await this.authRepository.auth({
-        cpf,
+      const userData = await this.authRepository.auth({
+        email,
         password,
       });
 
-      if (!user) {
-        return { error: 'Cpf ou senha inválida' };
+      if (!userData) {
+        return { error: 'email ou senha inválida' };
+      }
+
+      const user = {
+        id: userData.user.id,
+        email: userData.user.email,
+        name: userData.user.name
       }
 
       const token = jwt.sign({
-        ...user.user,
+        user
       }, process.env.TOKEN_SECRET || '', {
         expiresIn: '1d',
       });
 
-      return { token };
+      return { token, user };
 
     } catch (error) {
       console.log('error', error)

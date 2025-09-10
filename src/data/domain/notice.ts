@@ -48,3 +48,26 @@ export interface GetAllNoticeUseCaseResponse {
     error?: string
 }
 
+//-------------------- get by id ----------------
+
+export interface GetByIdNoticeUseCaseResponse {
+    data?: {
+        id: string,
+        title: string,
+        description: string,
+        created_at: Date,
+        photos: string,
+        likes: number,
+        dislikes: number
+    }
+    error?: string
+}
+export interface GetByIdNoticeRepositoryResponse {
+    id: string,
+    title: string,
+    description: string,
+    created_at: Date,
+    photos: string,
+    likes: number,
+    dislikes: number
+}

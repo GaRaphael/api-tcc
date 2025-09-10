@@ -12,10 +12,10 @@ export class AddUserUseCase {
   async perform(params: AddUserUseCaseParams): Promise<AddUserUseCaseResponse> {
 
     try {
-      const alreadyUser = await this.userRepository.verifyExists({ cpf: params.cpf });
+      const alreadyUser = await this.userRepository.verifyExists({ email: params.email });
 
       if (alreadyUser.exists) {
-        return { error: 'Cpf já cadastrado' };
+        return { error: 'email já cadastrado' };
       }
 
       if (params.password !== params.confirm_password) {

@@ -1,7 +1,8 @@
 import { PrismaHelper } from '../helpers';
 import {
     AddNoticeRepositoryParams,
-    AddNoticeRepositoryResponse
+    AddNoticeRepositoryResponse,
+    GetByIdNoticeRepositoryResponse
 } from '../../../data/domain';
 
 const { prisma } = PrismaHelper;
@@ -50,6 +51,42 @@ export class NoticeRepository {
         });
 
         return response;
+    }
+
+    public async getById(params: { id: number }): Promise<GetByIdNoticeRepositoryResponse | null> {
+        const { notice: noticeModel } = prisma;
+
+        const response = await noticeModel.findFirst({
+            where: {
+                AND: [
+                    {
+                        id: params.id
+                    },
+                    {
+                        active: true
+                    }
+                ]
+            },
+            select: {
+                id: true,
+                title: true,
+                description: true,
+                image: true || null,
+                active: true,
+                created_at: true,
+                updated_at: true
+            }
+        });
+
+        return {
+            title: response?.title || '',
+            description: response?.description || '',
+            created_at: response?.created_at || new Date(),
+            dislikes: 0,
+            likes: 0,
+            id: response?.id.toString() || '',
+            photos: response?.image || ''
+        }
     }
 
 }

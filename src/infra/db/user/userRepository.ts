@@ -11,7 +11,6 @@ export class UserRepository {
 
     public async add(params: AddUserRepositoryParams): Promise<AddUserRepositoryResponse> {
         const {
-            cpf,
             email,
             name,
             password,
@@ -19,9 +18,9 @@ export class UserRepository {
 
         const { user: UserModel } = prisma;
 
+
         const user = await UserModel.create({
             data: {
-                cpf,
                 email,
                 name,
                 password
@@ -38,7 +37,7 @@ export class UserRepository {
 
         const user = await UserModel.findFirst({
             where: {
-                cpf: params.cpf,
+                email: params.email,
             },
         });
 
@@ -49,9 +48,22 @@ export class UserRepository {
 
         const { user: UserModel } = prisma;
 
+        const get_user_id = await UserModel.findFirst({
+            where: {
+                email: params.email
+            },
+            select: {
+                id: true
+            }
+        });
+
+        if (!get_user_id) {
+            throw new Error('User not found');
+        }
+
         const update_pass = await UserModel.update({
             where: {
-                cpf: params.cpf
+                id: get_user_id.id
             },
             data: {
                 password: params.new_password

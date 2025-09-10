@@ -8,11 +8,18 @@ import {
     GetAllNoticeUseCase
 } from '../../data/useCase';
 
+import { GetByIdNoticeController } from '../../presentation/controller/notice/getByIdNoticeController';
+import { GetByIdNoticeUseCase } from '../../data/useCase/notice/getByIdNoticeUseCase';
+import multer from 'multer';
+import uploadConfig from '../config/upload';
 import { adaptRoute } from '../adapter/expressRouteAdapter';
 import { Controller } from '../../presentation/controller';
 import { NoticeRepository } from '../../infra/db';
 
 const router = Router();
+
+const upload = multer(uploadConfig);
+
 
 const makeAddNoticeController = (): Controller => {
 
@@ -34,9 +41,21 @@ const makeGetAllNoticesController = (): Controller => {
 }
 
 
+const makeGetByIdNoticeController = (): Controller => {
+    const noticeRepository = new NoticeRepository();
+
+    const getByIdNoticeUseCase = new GetByIdNoticeUseCase(noticeRepository);
+    const getByIdNoticeController = new GetByIdNoticeController(getByIdNoticeUseCase);
+
+    return getByIdNoticeController;
+};
+
+
+
 router
-    .post('/notice', adaptRoute(makeAddNoticeController()))
+    .post('/notice', upload.single('image'), adaptRoute(makeAddNoticeController()))
     .get('/notices', adaptRoute(makeGetAllNoticesController()))
+    .get('/notices/:id', adaptRoute(makeGetByIdNoticeController()));
 
 
 export default router;

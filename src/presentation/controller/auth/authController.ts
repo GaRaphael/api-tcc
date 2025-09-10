@@ -8,10 +8,10 @@ export class AuthController implements Controller {
 
   public async handle(request: Request): Promise<HttpResponse> {
     try {
-      const { cpf, password } = request.body
+      const { email, password } = request.body
 
       const response = await this.authUseCase.perform({
-        cpf,
+        email,
         password
       });
 

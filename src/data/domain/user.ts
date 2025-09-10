@@ -3,14 +3,12 @@
 
 export interface AddUserUseCaseParams {
     email: string
-    cpf: string
     name: string
     password: string
     confirm_password: string
 }
 export interface AddUserRepositoryParams {
     email: string
-    cpf: string
     name: string
     password: string
 }
@@ -18,7 +16,6 @@ export interface AddUserUseCaseResponse {
     data?: {
         id: number
         email: string
-        cpf: string
         name: string
         password: string
         active: boolean
@@ -30,7 +27,6 @@ export interface AddUserUseCaseResponse {
 export interface AddUserRepositoryResponse {
     id: number
     email: string
-    cpf: string
     name: string
     password: string
     active: boolean
@@ -41,17 +37,17 @@ export interface AddUserRepositoryResponse {
 //------------------- verify exists ------------------
 
 export interface FindUserExistsParams {
-    cpf: string
+    email: string
 }
 
 //------------------- reset ------------------
 export interface ResetPasswordUseCaseParams {
-    cpf: string
+    email: string
     new_password: string
 }
 
 export interface ResetPasswordRepositoryParams {
-    cpf: string
+    email: string
     new_password: string
 }
 
@@ -59,7 +55,6 @@ export interface ResetPasswordUseCaseResponse {
     data?: {
         id: number
         email: string
-        cpf: string
         name: string
         password: string
         active: boolean

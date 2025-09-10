@@ -10,13 +10,13 @@ export class ResetPasswordUseCase {
   async perform(params: ResetPasswordUseCaseParams): Promise<ResetPasswordUseCaseResponse> {
 
     try {
-      const { cpf, new_password } = params;
+      const { email, new_password } = params;
 
       const cryptpoPassword = await generatePassword(new_password);
 
       const user = await this.userRepository.reset({
         new_password: cryptpoPassword,
-        cpf
+        email
       });
 
       if (!user) return { error: 'User not found' };
