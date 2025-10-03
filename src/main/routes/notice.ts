@@ -10,7 +10,6 @@ import {
 import { uploadSingle } from './../config/upload'
 import { GetByIdNoticeController } from '../../presentation/controller/notice/getByIdNoticeController';
 import { GetByIdNoticeUseCase } from '../../data/useCase/notice/getByIdNoticeUseCase';
-import uploadConfig from '../config/upload';
 import { adaptRoute } from '../adapter/expressRouteAdapter';
 import { Controller } from '../../presentation/controller';
 import { NoticeRepository } from '../../infra/db';

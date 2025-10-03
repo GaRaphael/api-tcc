@@ -5,13 +5,16 @@ export interface AddMeetingUseCaseParams {
     description: string,
     subject: string,
     title: string,
-    comment: string | null
+    location: string,
+    image?: string | null
 }
 export interface AddMeetingRepositoryParams {
     date: Date,
     description: string,
     subject: string,
     title: string,
+    location: string,
+    image?: string | null
 }
 
 export interface AddMeetingUseCaseResponse {
@@ -21,6 +24,8 @@ export interface AddMeetingUseCaseResponse {
         description: string,
         subject: string,
         title: string,
+        location: string | null,
+        image: string | null,
         active: boolean
         created_at: Date
         updated_at: Date
@@ -33,6 +38,8 @@ export interface AddMeetingRepositoryResponse {
     description: string,
     subject: string,
     title: string,
+    location: string | null,
+    image: string | null
     active: boolean
     created_at: Date
     updated_at: Date
@@ -47,6 +54,8 @@ export interface GetAllMeetingUseCaseResponse {
         description: string,
         subject: string,
         title: string,
+        location: string | null,
+        image: string | null
         active: boolean
         created_at: Date
         updated_at: Date
@@ -59,6 +68,8 @@ export interface GetAllMeetingRepositoryResponse {
     date: Date,
     description: string,
     subject: string,
+    location: string | null,
+    image: string | null
     title: string,
     active: boolean
     created_at: Date
@@ -73,6 +84,8 @@ export interface GetByIdMeetingUseCaseResponse {
         date: Date,
         description: string,
         subject: string,
+        location: string | null,
+        image: string | null
         title: string,
         active: boolean
         created_at: Date
@@ -87,6 +100,8 @@ export interface GetByIdMeetingRepositoryResponse {
     description: string,
     subject: string,
     title: string,
+    location: string | null,
+    image: string | null
     active: boolean
     created_at: Date
     updated_at: Date

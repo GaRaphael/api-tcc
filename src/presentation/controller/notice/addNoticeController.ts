@@ -9,36 +9,18 @@ export class AddNoticeController implements Controller {
     public async handle(request: Request): Promise<HttpResponse> {
         try {
             const { title, description, image } = request.body;
-            console.log("Request body:", { 
-                title,
-                description,
-                hasImage: !!image,
-                imageInfo: image ? {
-                    name: image.originalname,
-                    type: image.mimetype,
-                    size: image.size,
-                    bufferLength: image.buffer?.length
-                } : null
-            });
 
             let processedImage: any = null;
 
-            if (image && image.buffer) {
-                const buffer = Buffer.from(image.buffer);
+            if (image && image.base64) {
+                const buffer = Buffer.from(image.base64, 'base64');
 
                 processedImage = {
                     buffer: buffer,
                     originalname: image.originalname,
                     mimetype: image.mimetype,
-                    size: image.size
+                    size: buffer.length
                 };
-
-                console.log("Imagem processada:", {
-                    filename: processedImage.originalname,
-                    size: processedImage.size,
-                    mimetype: processedImage.mimetype,
-                    bufferSize: processedImage.buffer.length
-                });
             }
 
             const response = await this.addNoticeUseCase.perform({

@@ -17,7 +17,9 @@ export class MeetingRepository {
             date,
             description,
             subject,
-            title
+            title,
+            location,
+            image
         } = params;
 
         const { meeting: meetingModel } = prisma;
@@ -27,7 +29,10 @@ export class MeetingRepository {
                 date: new Date(date),
                 description: description,
                 subject: subject,
-                title: title
+                title: title,
+                image,
+                location,
+                active: true
             },
         });
 
@@ -47,6 +52,8 @@ export class MeetingRepository {
                 description: true,
                 subject: true,
                 date: true,
+                image: true || null,
+                location: true || null,
                 active: true,
                 created_at: true,
                 updated_at: true
@@ -72,6 +79,8 @@ export class MeetingRepository {
                 description: true,
                 subject: true,
                 date: true,
+                image: true || null,
+                location: true || null,
                 active: true,
                 created_at: true,
                 updated_at: true

@@ -10,7 +10,8 @@ import {
     GetAllMeetingUseCase,
     GetByIdMeetingUseCase
 } from '../../data/useCase/meeting';
-
+import { uploadSingle } from './../config/upload'
+import { AwsCloudClient } from '../../infra/cloud/awsCloudClient';
 import { adaptRoute } from '../adapter/expressRouteAdapter';
 import { Controller } from '../../presentation/controller';
 import { MeetingRepository } from '../../infra/db';
@@ -20,8 +21,9 @@ const router = Router();
 const makeAddMeetingController = (): Controller => {
 
     const meetingRepository = new MeetingRepository();
+    const cloudClient = new AwsCloudClient();
 
-    const addMeetingUseCase = new AddMeetingUseCase(meetingRepository);
+    const addMeetingUseCase = new AddMeetingUseCase(meetingRepository, cloudClient);
     const addMeetingController = new AddMeetingController(addMeetingUseCase);
 
     return addMeetingController;
@@ -52,7 +54,7 @@ const makeGetByIdMeetingController = (): Controller => {
 
 
 router
-    .post('/meeting', adaptRoute(makeAddMeetingController()))
+    .post('/meeting', uploadSingle, adaptRoute(makeAddMeetingController()))
     .get('/meetings', adaptRoute(makeGetAllMeetingController()))
     .get('/meeting/:id', adaptRoute(makeGetByIdMeetingController()))
 

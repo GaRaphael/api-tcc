@@ -1,10 +1,10 @@
-import { GetByIdMeetingUseCaseParams, GetByIdMeetingUseCaseResponse} from '../../domain/meeting';
+import { GetByIdMeetingUseCaseParams, GetByIdMeetingUseCaseResponse } from '../../domain/meeting';
 import { MeetingRepository } from '../../../infra/db';
 
 export class GetByIdMeetingUseCase {
 
   constructor(
-    private meetingRepository: MeetingRepository
+    private meetingRepository: MeetingRepository,
   ) { }
 
   async perform(params: GetByIdMeetingUseCaseParams): Promise<GetByIdMeetingUseCaseResponse> {
