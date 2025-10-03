@@ -1,24 +1,24 @@
-import multer from 'multer';
-import path from 'path';
-import crypto from 'crypto';
-import fs from 'fs';
+import multer, { FileFilterCallback } from 'multer';
 
-const uploadFolder = path.resolve(__dirname, '..', '..', '..', 'tmp', 'uploads');
+// Configuração do multer para upload em memória
+const storage = multer.memoryStorage();
 
-// Garante que o diretório de upload exista
-if (!fs.existsSync(uploadFolder)) {
-  fs.mkdirSync(uploadFolder, { recursive: true });
-}
+const upload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 5 * 1024 * 1024, // 5MB limite
+  },
+  fileFilter: (req: Express.Request, file: Express.Multer.File, cb: FileFilterCallback) => {
+    // Verificar se é uma imagem
+    if (file.mimetype.startsWith('image/')) {
+      cb(null, true);
+    } else {
+      cb(new Error('Apenas arquivos de imagem são permitidos!'));
+    }
+  },
+});
 
-export default {
-  directory: uploadFolder,
-  storage: multer.diskStorage({
-    destination: uploadFolder,
-    filename(request, file, callback) {
-      const fileHash = crypto.randomBytes(10).toString('hex');
-      const fileName = `${fileHash}-${file.originalname}`;
+export const uploadSingle = upload.single('image');
+export const uploadMultiple = upload.array('images', 5);
 
-      callback(null, fileName);
-    },
-  }),
-};
+export default upload;

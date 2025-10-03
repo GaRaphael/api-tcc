@@ -1,17 +1,19 @@
-import { Request } from 'express';
 import { StatusCodes } from 'http-status-codes';
-import { GetAllCommentUseCase } from '../../../data/useCase'
+import { GetAllReactionUseCase } from '../../../data/useCase/reaction/getAllReactionUseCase'
 import { Controller, HttpResponse } from '../protocols/controller.protocols';
+import { Request } from 'express';
 
+export class GetAllReactionController implements Controller {
 
-export class GetAllCommentController implements Controller {
-    constructor(private GetAllCommentUseCase: GetAllCommentUseCase) { }
+    constructor(private GetAllReactionUseCase: GetAllReactionUseCase) { }
 
     public async handle(request: Request): Promise<HttpResponse> {
 
         try {
 
-            const response = await this.GetAllCommentUseCase.perform({ meeting_id: Number(request.params.meeting_id) });
+            const response = await this.GetAllReactionUseCase.perform({
+                notice_id: Number(request.params.notice_id)
+            });
 
             if (response.error) {
                 return { statusCode: StatusCodes.BAD_REQUEST, body: response.error };

@@ -31,6 +31,7 @@ export interface GetAllCommentUseCaseResponse {
     data?: {
         id: number
         description: string,
+        name: string,
         active: boolean
         created_at: Date
         updated_at: Date
@@ -41,6 +42,7 @@ export interface GetAllCommentUseCaseResponse {
 export interface GetAllCommentRepositoryResponse {
     id: number
     description: string,
+    name: string,
     active: boolean
     created_at: Date
     updated_at: Date

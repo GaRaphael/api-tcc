@@ -7,25 +7,23 @@ import {
     AddNoticeUseCase,
     GetAllNoticeUseCase
 } from '../../data/useCase';
-
+import { uploadSingle } from './../config/upload'
 import { GetByIdNoticeController } from '../../presentation/controller/notice/getByIdNoticeController';
 import { GetByIdNoticeUseCase } from '../../data/useCase/notice/getByIdNoticeUseCase';
-import multer from 'multer';
 import uploadConfig from '../config/upload';
 import { adaptRoute } from '../adapter/expressRouteAdapter';
 import { Controller } from '../../presentation/controller';
 import { NoticeRepository } from '../../infra/db';
+import { AwsCloudClient } from '../../infra/cloud/awsCloudClient';
 
-const router = Router();
-
-const upload = multer(uploadConfig);
+const router = Router()
 
 
 const makeAddNoticeController = (): Controller => {
-
     const noticeRepository = new NoticeRepository();
+    const cloudClient = new AwsCloudClient();
 
-    const addNoticeUseCase = new AddNoticeUseCase(noticeRepository);
+    const addNoticeUseCase = new AddNoticeUseCase(noticeRepository, cloudClient);
     const addNoticeController = new AddNoticeController(addNoticeUseCase);
 
     return addNoticeController;
@@ -53,7 +51,7 @@ const makeGetByIdNoticeController = (): Controller => {
 
 
 router
-    .post('/notice', upload.single('image'), adaptRoute(makeAddNoticeController()))
+    .post('/notice', uploadSingle, adaptRoute(makeAddNoticeController()))
     .get('/notices', adaptRoute(makeGetAllNoticesController()))
     .get('/notices/:id', adaptRoute(makeGetByIdNoticeController()));
 

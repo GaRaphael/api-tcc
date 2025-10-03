@@ -10,7 +10,6 @@ export class AddCommentUseCase {
   async perform(params: AddCommentUseCaseParams): Promise<AddCommentUseCaseResponse> {
 
     try {
-
       const response = await this.commentRepository.add({ ...params })
 
       if (response) {
@@ -20,6 +19,7 @@ export class AddCommentUseCase {
       return { error: 'Error in add Comment' };
 
     } catch (error) {
+      console.log('error', error)
       return { error: `${error}` };
     }
   }

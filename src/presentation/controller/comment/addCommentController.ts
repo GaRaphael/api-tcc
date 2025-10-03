@@ -11,16 +11,17 @@ export class AddCommentController implements Controller {
     public async handle(request: Request): Promise<HttpResponse> {
 
         try {
-
-            const body = request.body as AddCommentUseCaseParams;
-
-            const response = await this.addCommentUseCase.perform({ ...body });
+            const response = await this.addCommentUseCase.perform({
+                description: request.body.description,
+                user_id: Number(request.body.user_id),
+                meeting_id: Number(request.body.meeting_id)
+            });
 
             if (response.error) {
                 return { statusCode: StatusCodes.BAD_REQUEST, body: response.error };
             }
 
-            return { statusCode: StatusCodes.OK, body: response};
+            return { statusCode: StatusCodes.OK, body: response };
 
         } catch (error) {
             return { statusCode: StatusCodes.INTERNAL_SERVER_ERROR, body: error };

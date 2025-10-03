@@ -20,23 +20,10 @@ model user {
 }
 
 model notice {
-  id          Int      @id @default(autoincrement())
+  id          Int        @id @default(autoincrement())
   title       String
   description String
   image       String?
-  active      Boolean  @default(true)
-  created_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
-  updated_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
-}
-
-model meeting {
-  id          Int        @id @default(autoincrement())
-  title       String
-  subject     String
-  description String
-  date        DateTime
-  comment_id  Int?
-  reaction_id Int?
   active      Boolean    @default(true)
   created_at  DateTime   @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
   updated_at  DateTime   @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
@@ -44,26 +31,39 @@ model meeting {
   reaction    reaction[]
 }
 
+model meeting {
+  id          Int      @id @default(autoincrement())
+  title       String
+  subject     String
+  description String
+  date        DateTime
+  comment_id  Int?
+  reaction_id Int?
+  active      Boolean  @default(true)
+  created_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  updated_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+}
+
 model comment {
   id          Int      @id @default(autoincrement())
-  meeting_id  Int
+  notice_id   Int
   user_id     Int
   description String
   active      Boolean  @default(true)
   created_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
   updated_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
   user        user     @relation(fields: [user_id], references: [id])
-  meeting     meeting  @relation(fields: [meeting_id], references: [id])
+  notice      notice   @relation(fields: [notice_id], references: [id])
 }
 
 model reaction {
   id         Int      @id @default(autoincrement())
-  meeting_id Int
+  notice_id  Int
   user_id    Int
   type       String
   active     Boolean  @default(true)
   created_at DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
   updated_at DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
   user       user     @relation(fields: [user_id], references: [id])
-  meeting    meeting  @relation(fields: [meeting_id], references: [id])
+  notice     notice   @relation(fields: [notice_id], references: [id])
 }

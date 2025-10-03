@@ -8,7 +8,7 @@ export interface AddNoticeUseCaseParams {
 export interface AddNoticeRepositoryParams {
     title: string
     description: string
-    image: string | null
+    image?: string | null
 }
 
 export interface AddNoticeUseCaseResponse {
