@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "esnext",
     "declaration": true,
+    "rootDir": "src",
     "outDir": "dist",
     "strict": true,
     "allowSyntheticDefaultImports": true,
@@ -19,7 +20,7 @@
     "resolveJsonModule": true,
     "typeRoots": [
       "@types",
-      "./node_modules/@types",
+      "./node_modules/@types"
     ]
   },
   "include": [
