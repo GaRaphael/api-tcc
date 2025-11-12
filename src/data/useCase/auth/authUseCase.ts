@@ -32,7 +32,7 @@ export class AuthUseCase {
         user
       }, process.env.TOKEN_SECRET || '', {
         expiresIn: '1d',
-      });
+      })
 
       return { token, user };
 
