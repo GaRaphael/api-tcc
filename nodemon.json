@@ -1,6 +1,11 @@
 {
-  "ignore": ["node_modules"],
-  "watch": ["src", "package-lock.json"],
-  "exec": "babel-node src/server.ts --extensions \".ts\"",
+  "ignore": [
+    "node_modules"
+  ],
+  "watch": [
+    "src",
+    "package-lock.json"
+  ],
+  "exec": "babel-node src/main/server.ts --extensions \".ts\"",
   "ext": "ts"
 }

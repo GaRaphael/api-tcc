@@ -16,7 +16,7 @@ export class CommentRepository {
             user_id,
             meeting_id
         } = params;
-        console.log('params repository', params)
+
         const { comment: commentModel } = prisma;
 
         const response = await commentModel.create({
@@ -71,29 +71,4 @@ export class CommentRepository {
         }));
     }
 
-    // public async getId(params: GetByIdMeetingRepositoryParams): Promise<GetByIdMeetingRepositoryResponse> {
-    //     const { meeting: meetingModel } = prisma;
-
-    //     const response = await meetingModel.findFirst({
-    //         where: {
-    //             id: params.id
-    //         },
-    //         select: {
-    //             id: true,
-    //             title: true,
-    //             description: true,
-    //             subject: true,
-    //             date: true,
-    //             active: true,
-    //             created_at: true,
-    //             updated_at: true
-    //         }
-    //     });
-
-    //     if (!response) {
-    //         throw new Error('Meeting not found');
-    //     }
-
-    //     return response;
-    // }
 }

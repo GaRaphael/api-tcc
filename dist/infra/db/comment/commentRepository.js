@@ -6,7 +6,6 @@ const { prisma } = helpers_1.PrismaHelper;
 class CommentRepository {
     async add(params) {
         const { description, user_id, meeting_id } = params;
-        console.log('params repository', params);
         const { comment: commentModel } = prisma;
         const response = await commentModel.create({
             data: {

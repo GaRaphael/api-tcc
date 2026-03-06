@@ -4,7 +4,7 @@ declare const prisma: PrismaClient<{
         level: "query";
         emit: "event";
     }[];
-}, "query", false, import("@prisma/client/runtime").DefaultArgs>;
+}, "query", import("@prisma/client/runtime/client").DefaultArgs>;
 export default prisma;
 export declare const PrismaHelper: {
     prisma: PrismaClient<{
@@ -12,7 +12,7 @@ export declare const PrismaHelper: {
             level: "query";
             emit: "event";
         }[];
-    }, "query", false, import("@prisma/client/runtime").DefaultArgs>;
+    }, "query", import("@prisma/client/runtime/client").DefaultArgs>;
     connect(): Promise<void>;
     disconnect(): Promise<void>;
 };
