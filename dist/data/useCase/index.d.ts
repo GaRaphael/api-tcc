@@ -3,3 +3,4 @@ export * from './auth';
 export * from './notice';
 export * from './meeting';
 export * from './comment';
+export * from './topic';

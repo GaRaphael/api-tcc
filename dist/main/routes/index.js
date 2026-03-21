@@ -11,6 +11,7 @@ const notice_1 = __importDefault(require("./notice"));
 const meeting_1 = __importDefault(require("./meeting"));
 const comment_1 = __importDefault(require("./comment"));
 const reaction_1 = __importDefault(require("./reaction"));
+const topic_1 = __importDefault(require("./topic"));
 router.get('/healthCheck', (__, res) => {
     res.status(200).send({
         message: 'OK',
@@ -23,5 +24,6 @@ router.use(notice_1.default);
 router.use(meeting_1.default);
 router.use(comment_1.default);
 router.use(reaction_1.default);
+router.use(topic_1.default);
 exports.default = router;
 //# sourceMappingURL=index.js.map

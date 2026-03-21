@@ -7,15 +7,19 @@ datasource db {
 }
 
 model user {
-  id         Int        @id @default(autoincrement())
-  email      String
-  name       String
-  password   String
-  active     Boolean    @default(true)
-  created_at DateTime   @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
-  updated_at DateTime   @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
-  comment    comment[]
-  reaction   reaction[]
+  id             Int              @id @default(autoincrement())
+  email          String
+  name           String
+  password       String
+  active         Boolean          @default(true)
+  created_at     DateTime         @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  updated_at     DateTime         @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  comment        comment[]
+  reaction       reaction[]
+  topics         topic[]
+  votes          vote_topic[]
+  commentTopics  comment_topic[]
+  reactionTopics reaction_topic[]
 }
 
 model notice {
@@ -65,4 +69,54 @@ model reaction {
   updated_at DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
   user       user     @relation(fields: [user_id], references: [id])
   notice     notice   @relation(fields: [notice_id], references: [id])
+}
+
+model topic {
+  id             Int              @id @default(autoincrement())
+  title          String
+  description    String
+  user_id        Int?
+  active         Boolean          @default(true)
+  created_at     DateTime         @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  updated_at     DateTime         @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  user           user?            @relation(fields: [user_id], references: [id])
+  votes          vote_topic[]
+  commentTopics  comment_topic[]
+  reactionTopics reaction_topic[]
+}
+
+model vote_topic {
+  id         Int      @id @default(autoincrement())
+  topic_id   Int
+  user_id    Int
+  type       String
+  active     Boolean  @default(true)
+  created_at DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  updated_at DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  user       user     @relation(fields: [user_id], references: [id])
+  topic      topic    @relation(fields: [topic_id], references: [id])
+}
+
+model comment_topic {
+  id          Int      @id @default(autoincrement())
+  topic_id    Int
+  user_id     Int
+  description String
+  active      Boolean  @default(true)
+  created_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  updated_at  DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  user        user     @relation(fields: [user_id], references: [id])
+  topic       topic    @relation(fields: [topic_id], references: [id])
+}
+
+model reaction_topic {
+  id         Int      @id @default(autoincrement())
+  topic_id   Int
+  user_id    Int
+  type       String
+  active     Boolean  @default(true)
+  created_at DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  updated_at DateTime @default(dbgenerated("CURRENT_TIMESTAMP(0)")) @db.Timestamp(0)
+  user       user     @relation(fields: [user_id], references: [id])
+  topic      topic    @relation(fields: [topic_id], references: [id])
 }

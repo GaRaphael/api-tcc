@@ -19,4 +19,5 @@ __exportStar(require("./auth"), exports);
 __exportStar(require("./notice"), exports);
 __exportStar(require("./meeting"), exports);
 __exportStar(require("./comment"), exports);
+__exportStar(require("./topic"), exports);
 //# sourceMappingURL=index.js.map
