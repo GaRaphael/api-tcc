@@ -10,7 +10,7 @@ export class UpsertVoteTopicController implements Controller {
         try {
             const topicId = Number(request.body.topic_id);
             const type = request.body.type;
-            const userId = Number(request.user?.user?.id || request.user?.id);
+            const userId = Number(request.body.user_id);
 
             if (!topicId || !type) {
                 return { statusCode: StatusCodes.BAD_REQUEST, body: 'topic_id and type are required' };

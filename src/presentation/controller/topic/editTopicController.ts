@@ -11,7 +11,7 @@ export class EditTopicController implements Controller {
             const id = Number(request.params.id);
             const title = request.body.title;
             const description = request.body.description;
-            const userId = Number(request.user?.user?.id || request.user?.id);
+            const userId = Number(request.body.user_id);
 
             if (!id) {
                 return { statusCode: StatusCodes.BAD_REQUEST, body: 'Topic id is required' };

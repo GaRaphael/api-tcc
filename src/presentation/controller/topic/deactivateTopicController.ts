@@ -9,7 +9,7 @@ export class DeactivateTopicController implements Controller {
     public async handle(request: Request): Promise<HttpResponse> {
         try {
             const id = Number(request.params.id);
-            const userId = Number(request.user?.user?.id || request.user?.id);
+            const userId = Number(request.body.user_id);
 
             if (!id) {
                 return { statusCode: StatusCodes.BAD_REQUEST, body: 'Topic id is required' };
