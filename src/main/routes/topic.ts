@@ -89,7 +89,7 @@ router
     .post('/topic/reaction', auth, adaptRoute(makeAddReactionTopicController()))
     .post('/topic/comment', auth, adaptRoute(makeAddCommentTopicController()))
     .post('/topic/vote', auth, adaptRoute(makeUpsertVoteTopicController()))
-    .get('/topics', auth, adaptRoute(makeGetAllTopicController()))
-    .get('/topics/:id', auth, adaptRoute(makeGetByIdTopicController()));
+    .get('/topics', adaptRoute(makeGetAllTopicController()))
+    .get('/topics/:id', adaptRoute(makeGetByIdTopicController()));
 
 export default router;
