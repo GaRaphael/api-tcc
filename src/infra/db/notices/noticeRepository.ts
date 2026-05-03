@@ -46,7 +46,7 @@ export class NoticeRepository {
                 updated_at: true
             },
             orderBy: {
-                created_at: 'desc'
+                id: 'desc'
             }
         });
 
