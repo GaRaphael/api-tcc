@@ -12,7 +12,7 @@ class EditTopicController {
             const id = Number(request.params.id);
             const title = request.body.title;
             const description = request.body.description;
-            const userId = Number(request.user?.user?.id || request.user?.id);
+            const userId = Number(request.body.user_id);
             if (!id) {
                 return { statusCode: http_status_codes_1.StatusCodes.BAD_REQUEST, body: 'Topic id is required' };
             }

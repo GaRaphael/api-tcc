@@ -11,7 +11,7 @@ class AddReactionTopicController {
         try {
             const topicId = Number(request.body.topic_id);
             const type = request.body.type;
-            const userId = Number(request.user?.user?.id || request.user?.id);
+            const userId = Number(request.body.user_id);
             if (!topicId || !type) {
                 return { statusCode: http_status_codes_1.StatusCodes.BAD_REQUEST, body: 'topic_id and type are required' };
             }

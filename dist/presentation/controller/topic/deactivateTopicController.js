@@ -10,7 +10,7 @@ class DeactivateTopicController {
     async handle(request) {
         try {
             const id = Number(request.params.id);
-            const userId = Number(request.user?.user?.id || request.user?.id);
+            const userId = Number(request.body.user_id);
             if (!id) {
                 return { statusCode: http_status_codes_1.StatusCodes.BAD_REQUEST, body: 'Topic id is required' };
             }

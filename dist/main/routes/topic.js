@@ -57,7 +57,7 @@ router
     .post('/topic/reaction', auth_1.default, (0, expressRouteAdapter_1.adaptRoute)(makeAddReactionTopicController()))
     .post('/topic/comment', auth_1.default, (0, expressRouteAdapter_1.adaptRoute)(makeAddCommentTopicController()))
     .post('/topic/vote', auth_1.default, (0, expressRouteAdapter_1.adaptRoute)(makeUpsertVoteTopicController()))
-    .get('/topics', auth_1.default, (0, expressRouteAdapter_1.adaptRoute)(makeGetAllTopicController()))
-    .get('/topics/:id', auth_1.default, (0, expressRouteAdapter_1.adaptRoute)(makeGetByIdTopicController()));
+    .get('/topics', (0, expressRouteAdapter_1.adaptRoute)(makeGetAllTopicController()))
+    .get('/topics/:id', (0, expressRouteAdapter_1.adaptRoute)(makeGetByIdTopicController()));
 exports.default = router;
 //# sourceMappingURL=topic.js.map

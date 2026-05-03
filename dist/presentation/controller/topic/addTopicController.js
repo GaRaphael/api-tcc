@@ -11,7 +11,7 @@ class AddTopicController {
         try {
             const title = request.body.title;
             const description = request.body.description;
-            const userId = Number(request.user?.user?.id || request.user?.id);
+            const userId = Number(request.body.user_id);
             if (!title || !description) {
                 return { statusCode: http_status_codes_1.StatusCodes.BAD_REQUEST, body: 'title and description are required' };
             }

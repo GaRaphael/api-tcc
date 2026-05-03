@@ -7,7 +7,7 @@ export declare class TopicRepository {
         description: string;
         created_at: Date;
         updated_at: Date;
-        user_id: number | null;
+        user_id: number;
     }>;
     getById(id: number): Promise<TopicRepositoryById | null>;
     edit(params: {
@@ -21,7 +21,7 @@ export declare class TopicRepository {
         description: string;
         created_at: Date;
         updated_at: Date;
-        user_id: number | null;
+        user_id: number;
     }>;
     deactivate(id: number): Promise<{
         id: number;
