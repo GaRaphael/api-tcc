@@ -50,7 +50,7 @@ export class NoticeRepository {
             }
         });
 
-        return response;
+        return response
     }
 
     public async getById(params: { id: number }): Promise<GetByIdNoticeRepositoryResponse | null> {
